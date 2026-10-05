@@ -151,9 +151,9 @@ export const MemoryGallery: React.FC<MemoryGalleryProps> = ({ onUnlockNext, isNe
   }, [selectedPhoto, currentIndex]);
 
   return (
-    <section id="memories" className="relative py-28 sm:py-36 px-4 sm:px-6 w-full max-w-6xl mx-auto">
+    <section id="memories" className="relative py-20 sm:py-36 px-3 sm:px-6 w-full max-w-6xl mx-auto">
       {/* Section Header */}
-      <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+      <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -172,7 +172,7 @@ export const MemoryGallery: React.FC<MemoryGalleryProps> = ({ onUnlockNext, isNe
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.32, 0.72, 0, 1] }}
-          className="text-3xl sm:text-5xl lg:text-6xl font-serif font-bold text-white mb-6"
+          className="text-2xl sm:text-5xl lg:text-6xl font-serif font-bold text-white mb-4 sm:mb-6"
         >
           Memory Vault
         </motion.h2>
@@ -182,17 +182,17 @@ export const MemoryGallery: React.FC<MemoryGalleryProps> = ({ onUnlockNext, isNe
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
-          className="text-base sm:text-lg text-cream/70 font-light"
+          className="text-sm sm:text-lg text-cream/70 font-light"
         >
           Unscripted moments, genuine laughs, and memories that stay timeless across 18 captured snapshots.
         </motion.p>
 
         {/* Category Filter Pills & Mood Filter Palette */}
-        <div className="mt-8 flex flex-col items-center gap-4">
+        <div className="mt-6 sm:mt-8 flex flex-col items-center gap-3.5 sm:gap-4 max-w-full">
           {/* Category Filter Pills */}
-          <div className="flex flex-wrap items-center justify-center gap-2">
+          <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
             {[
-              { id: 'all', label: `All Memories (${BIRTHDAY_DATA.memories.length})` },
+              { id: 'all', label: `All (${BIRTHDAY_DATA.memories.length})` },
               { id: 'vibes', label: '✦ Vibes' },
               { id: 'chaos', label: '✦ Chaos & Fun' },
               { id: 'milestone', label: '✦ Milestones' },
@@ -200,7 +200,7 @@ export const MemoryGallery: React.FC<MemoryGalleryProps> = ({ onUnlockNext, isNe
               <button
                 key={cat.id}
                 onClick={() => setActiveFilter(cat.id)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-mono transition-all duration-300 ${
+                className={`px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-mono transition-all duration-300 ${
                   activeFilter === cat.id
                     ? 'bg-rose-500/20 border border-rose-400/60 text-white shadow-[0_0_15px_rgba(244,63,94,0.3)]'
                     : 'bg-white/[0.03] border border-white/10 text-cream/60 hover:text-white hover:bg-white/[0.06]'
@@ -212,13 +212,13 @@ export const MemoryGallery: React.FC<MemoryGalleryProps> = ({ onUnlockNext, isNe
           </div>
 
           {/* Cinematic Filter Palette Controls */}
-          <div className="flex flex-col items-center gap-2 pt-2">
-            <div className="flex items-center gap-2 text-xs font-mono text-cream/50">
-              <Wand2 className="w-3.5 h-3.5 text-gold-champagne" />
+          <div className="flex flex-col items-center gap-2 pt-1 max-w-full">
+            <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-mono text-cream/50">
+              <Wand2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-gold-champagne shrink-0" />
               <span>LIVE MOOD FILTERS:</span>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-2 p-1.5 rounded-full bg-white/[0.04] border border-white/10 backdrop-blur-xl">
+            <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 p-1 sm:p-1.5 rounded-2xl sm:rounded-full bg-white/[0.04] border border-white/10 backdrop-blur-xl max-w-full">
               {EFFECT_PRESETS.map((effect) => {
                 const isActive = currentEffect === effect.id;
                 return (
@@ -226,7 +226,7 @@ export const MemoryGallery: React.FC<MemoryGalleryProps> = ({ onUnlockNext, isNe
                     key={effect.id}
                     onClick={() => setCurrentEffect(effect.id)}
                     title={effect.description}
-                    className={`px-3 py-1.5 rounded-full text-xs font-mono transition-all duration-300 flex items-center gap-1.5 ${
+                    className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-mono transition-all duration-300 flex items-center gap-1 sm:gap-1.5 ${
                       isActive
                         ? 'bg-gradient-to-r from-rose-500/90 to-amber-600/90 text-white shadow-[0_4px_16px_rgba(244,63,94,0.35)] scale-105'
                         : 'text-cream/60 hover:text-cream hover:bg-white/[0.06]'
@@ -329,7 +329,7 @@ export const MemoryGallery: React.FC<MemoryGalleryProps> = ({ onUnlockNext, isNe
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/95 backdrop-blur-2xl"
+            className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-black/95 backdrop-blur-2xl"
             onClick={() => setSelectedPhoto(null)}
           >
             <motion.div
@@ -338,17 +338,17 @@ export const MemoryGallery: React.FC<MemoryGalleryProps> = ({ onUnlockNext, isNe
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-w-4xl w-full bg-[#101018] border border-white/15 rounded-3xl overflow-hidden shadow-2xl flex flex-col"
+              className="relative max-w-4xl w-full bg-[#101018] border border-white/15 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[94vh]"
             >
               {/* Top Controls: Close & Counter */}
-              <div className="absolute top-4 right-4 z-30 flex items-center gap-2">
-                <span className="px-3 py-1 rounded-full bg-black/75 backdrop-blur-md border border-white/15 text-xs font-mono text-cream/80">
+              <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-30 flex items-center gap-2">
+                <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-black/75 backdrop-blur-md border border-white/15 text-[11px] sm:text-xs font-mono text-cream/80">
                   {currentIndex + 1} / {BIRTHDAY_DATA.memories.length}
                 </span>
 
                 <button
                   onClick={() => setSelectedPhoto(null)}
-                  className="w-9 h-9 rounded-full bg-black/75 hover:bg-black/95 text-white flex items-center justify-center border border-white/20 transition-all hover:scale-105"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/75 hover:bg-black/95 text-white flex items-center justify-center border border-white/20 transition-all hover:scale-105"
                   aria-label="Close photo preview"
                 >
                   <X className="w-4 h-4" />
@@ -358,53 +358,53 @@ export const MemoryGallery: React.FC<MemoryGalleryProps> = ({ onUnlockNext, isNe
               {/* Prev / Next Arrow Overlay */}
               <button
                 onClick={handlePrev}
-                className="absolute left-3 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-black/70 hover:bg-black/95 text-white flex items-center justify-center border border-white/20 transition-all hover:scale-110 active:scale-95"
+                className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-30 w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-black/70 hover:bg-black/95 text-white flex items-center justify-center border border-white/20 transition-all hover:scale-110 active:scale-95"
                 aria-label="Previous memory"
               >
-                <ChevronLeft className="w-5 h-5" />
+                <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
 
               <button
                 onClick={handleNext}
-                className="absolute right-3 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-black/70 hover:bg-black/95 text-white flex items-center justify-center border border-white/20 transition-all hover:scale-110 active:scale-95"
+                className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-30 w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-black/70 hover:bg-black/95 text-white flex items-center justify-center border border-white/20 transition-all hover:scale-110 active:scale-95"
                 aria-label="Next memory"
               >
-                <ChevronRight className="w-5 h-5" />
+                <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
 
               <div className="grid grid-cols-1 md:grid-cols-12 max-h-[72vh] overflow-y-auto">
                 {/* Photo Display with Active Filter Applied */}
-                <div className="md:col-span-7 bg-black flex items-center justify-center overflow-hidden min-h-[350px] p-3">
+                <div className="md:col-span-7 bg-black flex items-center justify-center overflow-hidden min-h-[220px] sm:min-h-[350px] p-2 sm:p-3">
                   <img
                     src={selectedPhoto.image}
                     alt={selectedPhoto.title}
-                    className={`max-h-[58vh] w-auto max-w-full object-contain rounded-xl shadow-2xl transition-all duration-500 ${activeEffectClass}`}
+                    className={`max-h-[46vh] sm:max-h-[58vh] w-auto max-w-full object-contain rounded-lg sm:rounded-xl shadow-2xl transition-all duration-500 ${activeEffectClass}`}
                   />
                 </div>
 
                 {/* Narrative Details (No Year Mention) */}
-                <div className="md:col-span-5 p-6 sm:p-8 flex flex-col justify-between bg-[#0e0e15]">
+                <div className="md:col-span-5 p-4 sm:p-8 flex flex-col justify-between bg-[#0e0e15]">
                   <div>
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="eyebrow-badge bg-rose-500/10 border-rose-500/20 text-rose-300">
+                    <div className="flex items-center gap-2 mb-2 sm:mb-3">
+                      <span className="eyebrow-badge bg-rose-500/10 border-rose-500/20 text-rose-300 text-[10px] sm:text-[11px] px-2.5 py-0.5">
                         {selectedPhoto.tag}
                       </span>
-                      <span className="text-xs font-mono text-gold-champagne/80">
+                      <span className="text-[11px] sm:text-xs font-mono text-gold-champagne/80">
                         Amirtaa's Vault
                       </span>
                     </div>
 
-                    <h3 className="text-2xl font-serif font-bold text-white mb-2">
+                    <h3 className="text-xl sm:text-2xl font-serif font-bold text-white mb-1.5 sm:mb-2">
                       {selectedPhoto.title}
                     </h3>
 
-                    <p className="text-sm font-serif italic text-gold-champagne mb-6">
+                    <p className="text-xs sm:text-sm font-serif italic text-gold-champagne mb-4 sm:mb-6">
                       “{selectedPhoto.caption}”
                     </p>
 
                     {selectedPhoto.note && (
-                      <div className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-                        <span className="text-[10px] font-mono tracking-wider uppercase text-cream/50 block mb-1">
+                      <div className="p-3 sm:p-4 rounded-xl bg-white/[0.03] border border-white/[0.08]">
+                        <span className="text-[9px] sm:text-[10px] font-mono tracking-wider uppercase text-cream/50 block mb-1">
                           Backstory
                         </span>
                         <p className="text-xs text-cream/80 leading-relaxed font-light">
@@ -414,13 +414,13 @@ export const MemoryGallery: React.FC<MemoryGalleryProps> = ({ onUnlockNext, isNe
                     )}
                   </div>
 
-                  <div className="pt-6 border-t border-white/10 mt-6 flex items-center justify-between text-xs text-cream/40">
+                  <div className="pt-4 sm:pt-6 border-t border-white/10 mt-4 sm:mt-6 flex items-center justify-between text-xs text-cream/40">
                     <span className="flex items-center gap-1.5">
                       <Heart className="w-3.5 h-3.5 text-rose-400 fill-rose-400/40" />
-                      <span>Best Friends Forever</span>
+                      <span className="text-[11px] sm:text-xs">Best Friends Forever</span>
                     </span>
 
-                    <span className="font-mono text-[11px] text-cream/50">
+                    <span className="font-mono text-[10px] sm:text-[11px] text-cream/50">
                       ← / → keys
                     </span>
                   </div>
@@ -428,8 +428,8 @@ export const MemoryGallery: React.FC<MemoryGalleryProps> = ({ onUnlockNext, isNe
               </div>
 
               {/* Bottom Filmstrip Thumbnails Bar for Quick Navigation */}
-              <div className="p-3 bg-[#09090e] border-t border-white/10 flex items-center gap-2 overflow-x-auto">
-                <span className="text-[10px] font-mono text-cream/40 uppercase tracking-wider shrink-0 mr-1 flex items-center gap-1">
+              <div className="p-2 sm:p-3 bg-[#09090e] border-t border-white/10 flex items-center gap-1.5 sm:gap-2 overflow-x-auto">
+                <span className="text-[9px] sm:text-[10px] font-mono text-cream/40 uppercase tracking-wider shrink-0 mr-1 flex items-center gap-1">
                   <Layers className="w-3 h-3 text-gold-champagne" />
                   <span>ALL PHOTOS:</span>
                 </span>
@@ -437,7 +437,7 @@ export const MemoryGallery: React.FC<MemoryGalleryProps> = ({ onUnlockNext, isNe
                   <button
                     key={m.id}
                     onClick={() => setSelectedPhoto(m)}
-                    className={`relative shrink-0 w-12 h-12 rounded-lg overflow-hidden border transition-all duration-200 ${
+                    className={`relative shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-lg overflow-hidden border transition-all duration-200 ${
                       m.id === selectedPhoto.id
                         ? 'border-rose-400 ring-2 ring-rose-400/50 scale-105'
                         : 'border-white/15 opacity-50 hover:opacity-100'

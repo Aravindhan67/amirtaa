@@ -32,7 +32,7 @@ export const App: React.FC = () => {
       <div className="noise-overlay" />
 
       {/* Discreet Floating Ambient Music Toggle in Top-Right */}
-      <div className="fixed top-5 right-5 z-40">
+      <div className="fixed top-3 right-3 sm:top-5 sm:right-5 z-40">
         <MusicToggle />
       </div>
 

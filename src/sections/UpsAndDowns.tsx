@@ -13,9 +13,9 @@ export const UpsAndDowns: React.FC<UpsAndDownsProps> = ({ onUnlockNext, isNextUn
   const [selectedId, setSelectedId] = useState<string>(BIRTHDAY_DATA.upsAndDowns.categories[0].id);
 
   return (
-    <section id="ups-and-downs" className="relative py-28 sm:py-36 px-4 sm:px-6 w-full max-w-6xl mx-auto">
+    <section id="ups-and-downs" className="relative py-20 sm:py-36 px-3 sm:px-6 w-full max-w-6xl mx-auto">
       {/* Emotional Narrative Intro */}
-      <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-24">
+      <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -34,18 +34,18 @@ export const UpsAndDowns: React.FC<UpsAndDownsProps> = ({ onUnlockNext, isNextUn
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.32, 0.72, 0, 1] }}
-          className="text-3xl sm:text-5xl lg:text-6xl font-serif font-bold text-white mb-6"
+          className="text-2xl sm:text-5xl lg:text-6xl font-serif font-bold text-white mb-4 sm:mb-6"
         >
           {BIRTHDAY_DATA.upsAndDowns.heading}
         </motion.h2>
 
-        <div className="space-y-3 font-serif">
+        <div className="space-y-2 sm:space-y-3 font-serif">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
-            className="text-xl sm:text-2xl text-cream/70 font-light"
+            className="text-base sm:text-2xl text-cream/70 font-light"
           >
             “{BIRTHDAY_DATA.upsAndDowns.primaryQuote}”
           </motion.p>
@@ -54,7 +54,7 @@ export const UpsAndDowns: React.FC<UpsAndDownsProps> = ({ onUnlockNext, isNextUn
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.4, ease: [0.32, 0.72, 0, 1] }}
-            className="text-2xl sm:text-3xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-rose-200 via-white to-gold-champagne font-medium"
+            className="text-xl sm:text-3xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-rose-200 via-white to-gold-champagne font-medium"
           >
             “{BIRTHDAY_DATA.upsAndDowns.secondaryQuote}”
           </motion.p>
@@ -62,7 +62,7 @@ export const UpsAndDowns: React.FC<UpsAndDownsProps> = ({ onUnlockNext, isNextUn
       </div>
 
       {/* Cards Grid: Bento Layout with Doppelrand Architecture */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-12 sm:mb-16">
         {BIRTHDAY_DATA.upsAndDowns.categories.map((category: DayCategory, idx: number) => {
           const isSelected = selectedId === category.id;
           const isSpanTwo = idx === 4; // "Everything in between" spans across on desktop

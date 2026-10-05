@@ -228,12 +228,12 @@ export const BirthdaySurprise: React.FC = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 bg-[#07070a]/98 backdrop-blur-3xl overflow-y-auto"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-6 bg-[#07070a]/98 backdrop-blur-3xl overflow-y-auto"
           >
             {/* Ambient Cinema Lighting Glow */}
             <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-              <div className="w-[500px] h-[500px] rounded-full bg-rose-500/10 blur-[160px]" />
-              <div className="w-[400px] h-[400px] rounded-full bg-gold-champagne/10 blur-[140px]" />
+              <div className="w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] rounded-full bg-rose-500/10 blur-[120px] sm:blur-[160px]" />
+              <div className="w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] rounded-full bg-gold-champagne/10 blur-[100px] sm:blur-[140px]" />
             </div>
 
             <motion.div
@@ -241,31 +241,31 @@ export const BirthdaySurprise: React.FC = () => {
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.92, opacity: 0, y: 20 }}
               transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
-              className="relative max-w-3xl w-full bg-[#0d0d16] border border-white/20 rounded-3xl p-5 sm:p-7 shadow-[0_25px_80px_rgba(0,0,0,0.98)] my-auto max-h-[92vh] overflow-y-auto z-10"
+              className="relative max-w-3xl w-full bg-[#0d0d16] border border-white/20 rounded-2xl sm:rounded-3xl p-3.5 sm:p-7 shadow-[0_25px_80px_rgba(0,0,0,0.98)] my-auto max-h-[95vh] overflow-y-auto z-10"
             >
               {/* Top Header & Close Button */}
-              <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/[0.08]">
-                <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-rose-400 animate-ping" />
-                  <span className="eyebrow-badge bg-rose-500/10 border-rose-500/20 text-rose-300">
-                    <Film className="w-3 h-3 text-gold-champagne" />
+              <div className="flex items-center justify-between mb-3 sm:mb-4 pb-2.5 sm:pb-3 border-b border-white/[0.08]">
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-rose-400 animate-ping shrink-0" />
+                  <span className="eyebrow-badge bg-rose-500/10 border-rose-500/20 text-rose-300 text-[10px] sm:text-[11px] px-2.5 py-0.5 sm:px-3 sm:py-1">
+                    <Film className="w-3 h-3 text-gold-champagne shrink-0" />
                     <span>Birthday Premiere</span>
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5 sm:gap-2">
                   <button
                     onClick={() => fileInputRef.current?.click()}
                     title="Upload or change the video for Amirtaa"
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 text-[11px] font-mono text-cream/70 hover:text-white transition-all"
+                    className="flex items-center gap-1 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 text-[10px] sm:text-[11px] font-mono text-cream/70 hover:text-white transition-all"
                   >
-                    <Upload className="w-3 h-3 text-gold-champagne" />
-                    <span>{customVideoUploaded ? 'Change Video' : 'Upload Video'}</span>
+                    <Upload className="w-3 h-3 text-gold-champagne shrink-0" />
+                    <span>{customVideoUploaded ? 'Change' : 'Upload'}</span>
                   </button>
 
                   <button
                     onClick={handleCloseSurprise}
-                    className="w-8 h-8 rounded-full bg-white/[0.06] hover:bg-white/[0.12] text-cream flex items-center justify-center border border-white/10 transition-transform hover:scale-105"
+                    className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/[0.06] hover:bg-white/[0.12] text-cream flex items-center justify-center border border-white/10 transition-transform hover:scale-105"
                     aria-label="Close surprise window"
                   >
                     <X className="w-4 h-4" />
@@ -277,7 +277,7 @@ export const BirthdaySurprise: React.FC = () => {
               <div
                 ref={videoContainerRef}
                 onMouseMove={handleMouseMove}
-                className="relative w-full max-h-[58vh] min-h-[260px] rounded-2xl overflow-hidden bg-black border border-white/15 shadow-[0_15px_40px_rgba(0,0,0,0.9)] group mb-6 flex items-center justify-center"
+                className="relative w-full max-h-[48vh] sm:max-h-[58vh] min-h-[200px] sm:min-h-[260px] rounded-xl sm:rounded-2xl overflow-hidden bg-black border border-white/15 shadow-[0_15px_40px_rgba(0,0,0,0.9)] group mb-4 sm:mb-6 flex items-center justify-center"
               >
                 <video
                   ref={videoRef}
@@ -286,32 +286,32 @@ export const BirthdaySurprise: React.FC = () => {
                   onEnded={() => setIsPlaying(false)}
                   onClick={togglePlay}
                   playsInline
-                  className="max-h-[56vh] max-w-full w-auto h-auto object-contain mx-auto cursor-pointer block rounded-xl"
+                  className="max-h-[46vh] sm:max-h-[56vh] max-w-full w-auto h-auto object-contain mx-auto cursor-pointer block rounded-lg sm:rounded-xl"
                 />
 
                 {/* Big Center Play/Pause Overlay Button when hovered or paused */}
                 {(!isPlaying || showControls) && (
                   <button
                     onClick={togglePlay}
-                    className="absolute inset-0 m-auto w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-black/70 hover:bg-black/90 backdrop-blur-md border border-white/25 flex items-center justify-center text-white transition-all transform hover:scale-110 shadow-2xl z-20 pointer-events-auto"
+                    className="absolute inset-0 m-auto w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-black/70 hover:bg-black/90 backdrop-blur-md border border-white/25 flex items-center justify-center text-white transition-all transform hover:scale-110 shadow-2xl z-20 pointer-events-auto"
                     aria-label={isPlaying ? 'Pause video' : 'Play video'}
                   >
                     {isPlaying ? (
-                      <Pause className="w-6 h-6 sm:w-7 sm:h-7 text-rose-300" />
+                      <Pause className="w-5 h-5 sm:w-7 sm:h-7 text-rose-300" />
                     ) : (
-                      <Play className="w-6 h-6 sm:w-7 sm:h-7 text-gold-champagne translate-x-0.5" />
+                      <Play className="w-5 h-5 sm:w-7 sm:h-7 text-gold-champagne translate-x-0.5" />
                     )}
                   </button>
                 )}
 
                 {/* Video Controls Bar Overlay */}
                 <div
-                  className={`absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/95 via-black/70 to-transparent transition-opacity duration-300 z-30 ${
+                  className={`absolute bottom-0 left-0 right-0 p-2.5 sm:p-4 bg-gradient-to-t from-black/95 via-black/70 to-transparent transition-opacity duration-300 z-30 ${
                     showControls || !isPlaying ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
                   }`}
                 >
                   {/* Progress Scrubber */}
-                  <div className="relative mb-3 flex items-center">
+                  <div className="relative mb-2 sm:mb-3 flex items-center">
                     <input
                       type="range"
                       min="0"
@@ -325,7 +325,7 @@ export const BirthdaySurprise: React.FC = () => {
 
                   {/* Controls Row */}
                   <div className="flex items-center justify-between text-xs font-mono text-cream/80">
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2 sm:gap-3">
                       <button
                         onClick={togglePlay}
                         className="hover:text-white transition-colors"
@@ -346,12 +346,12 @@ export const BirthdaySurprise: React.FC = () => {
                         )}
                       </button>
 
-                      <span className="text-[11px] text-cream/60">
+                      <span className="text-[10px] sm:text-[11px] text-cream/60">
                         {currentTime} / {durationTime}
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2 sm:gap-3">
                       <span className="text-[10px] uppercase tracking-wider text-gold-champagne/80 font-sans hidden sm:inline">
                         {BIRTHDAY_DATA.surprise.video.title}
                       </span>

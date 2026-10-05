@@ -72,11 +72,11 @@ export const ChapterUnlockButton: React.FC<ChapterUnlockButtonProps> = ({
       </p>
 
       {/* Sleek, Modern Editorial Trigger with Ambient Glow */}
-      <div className="relative">
+      <div className="relative max-w-full px-2">
         <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-rose-500/30 to-amber-500/30 opacity-0 group-hover:opacity-100 blur-md transition-opacity duration-500" />
-        <div className="relative px-7 py-3 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-rose-400/50 transition-all duration-300 flex items-center gap-3 text-cream/90 group-hover:text-white group-hover:scale-[1.02] active:scale-[0.98] shadow-lg">
-          <Sparkles className="w-3.5 h-3.5 text-gold-champagne group-hover:rotate-12 transition-transform" />
-          <span className="font-serif text-sm sm:text-base tracking-wide font-medium">
+        <div className="relative px-4 sm:px-7 py-2.5 sm:py-3 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-rose-400/50 transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 text-cream/90 group-hover:text-white group-hover:scale-[1.02] active:scale-[0.98] shadow-lg max-w-full">
+          <Sparkles className="w-3.5 h-3.5 text-gold-champagne group-hover:rotate-12 transition-transform shrink-0" />
+          <span className="font-serif text-xs sm:text-base tracking-wide font-medium text-center">
             {isNextAlreadyUnlocked
               ? `Continue to Chapter 0${currentChapterNum + 1}: ${nextChapterTitle}`
               : `Unlock Chapter 0${currentChapterNum + 1}: ${nextChapterTitle}`}
@@ -84,7 +84,7 @@ export const ChapterUnlockButton: React.FC<ChapterUnlockButtonProps> = ({
           <motion.div
             animate={{ y: [0, 3, 0] }}
             transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-rose-400 group-hover:text-rose-300"
+            className="text-rose-400 group-hover:text-rose-300 shrink-0"
           >
             <ChevronDown className="w-4 h-4" />
           </motion.div>

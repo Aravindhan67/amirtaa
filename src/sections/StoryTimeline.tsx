@@ -44,9 +44,9 @@ export const StoryTimeline: React.FC<StoryTimelineProps> = ({ onUnlockNext, isNe
   };
 
   return (
-    <section id="story" className="relative py-28 sm:py-36 px-4 sm:px-6 w-full max-w-6xl mx-auto">
+    <section id="story" className="relative py-20 sm:py-36 px-3 sm:px-6 w-full max-w-6xl mx-auto">
       {/* Section Header */}
-      <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
+      <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -65,7 +65,7 @@ export const StoryTimeline: React.FC<StoryTimelineProps> = ({ onUnlockNext, isNe
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.32, 0.72, 0, 1] }}
-          className="text-3xl sm:text-5xl lg:text-6xl font-serif font-bold text-white mb-6"
+          className="text-2xl sm:text-5xl lg:text-6xl font-serif font-bold text-white mb-4 sm:mb-6"
         >
           {BIRTHDAY_DATA.story.heading}
         </motion.h2>
@@ -75,19 +75,19 @@ export const StoryTimeline: React.FC<StoryTimelineProps> = ({ onUnlockNext, isNe
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
-          className="text-base sm:text-xl font-light text-cream/80 leading-relaxed font-serif italic max-w-2xl mx-auto"
+          className="text-sm sm:text-xl font-light text-cream/80 leading-relaxed font-serif italic max-w-2xl mx-auto"
         >
           “{BIRTHDAY_DATA.story.leadText}”
         </motion.p>
       </div>
 
       {/* Interactive Year Stepper Bar with Glowing Constellation Track */}
-      <div className="mb-14">
-        <div className="flex items-center justify-between relative max-w-3xl mx-auto px-4">
+      <div className="mb-10 sm:mb-14">
+        <div className="flex items-center justify-between relative max-w-3xl mx-auto px-1 sm:px-4">
           {/* Connecting track line */}
-          <div className="absolute top-1/2 left-8 right-8 -translate-y-1/2 h-[2px] bg-white/[0.08] -z-0" />
+          <div className="absolute top-1/2 left-4 right-4 sm:left-8 sm:right-8 -translate-y-1/2 h-[2px] bg-white/[0.08] -z-0" />
           <motion.div
-            className="absolute top-1/2 left-8 -translate-y-1/2 h-[2px] bg-gradient-to-r from-rose-400 via-rose-300 to-gold-champagne -z-0 transition-all duration-500 shadow-[0_0_15px_rgba(244,114,182,0.7)]"
+            className="absolute top-1/2 left-4 sm:left-8 -translate-y-1/2 h-[2px] bg-gradient-to-r from-rose-400 via-rose-300 to-gold-champagne -z-0 transition-all duration-500 shadow-[0_0_15px_rgba(244,114,182,0.7)]"
             style={{
               width: `${(activeYearIndex / (BIRTHDAY_DATA.story.timeline.length - 1)) * 90}%`
             }}
@@ -105,9 +105,9 @@ export const StoryTimeline: React.FC<StoryTimelineProps> = ({ onUnlockNext, isNe
                 aria-label={`Select ${item.yearLabel} - ${item.title}`}
               >
                 <div
-                  className={`w-11 h-11 sm:w-13 sm:h-13 rounded-full flex items-center justify-center text-xs sm:text-sm font-mono font-bold transition-all duration-500 relative ${
+                  className={`w-9 h-9 sm:w-13 sm:h-13 rounded-full flex items-center justify-center text-[11px] sm:text-sm font-mono font-bold transition-all duration-500 relative ${
                     isActive
-                      ? 'bg-gradient-to-tr from-rose-500 to-amber-500 text-white shadow-[0_0_30px_rgba(244,114,182,0.6)] scale-115 ring-4 ring-rose-500/25'
+                      ? 'bg-gradient-to-tr from-rose-500 to-amber-500 text-white shadow-[0_0_25px_rgba(244,114,182,0.6)] scale-110 sm:scale-115 ring-2 sm:ring-4 ring-rose-500/25'
                       : isPassed
                       ? 'bg-[#151522] text-gold-champagne border border-gold-champagne/40 group-hover:scale-105'
                       : 'bg-[#101018] text-cream/40 border border-white/10 group-hover:border-white/30 group-hover:scale-105'
@@ -115,11 +115,11 @@ export const StoryTimeline: React.FC<StoryTimelineProps> = ({ onUnlockNext, isNe
                 >
                   0{item.yearNumber}
                   {isActive && (
-                    <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-gold-champagne border-2 border-[#101018] animate-ping" />
+                    <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-gold-champagne border border-[#101018] animate-ping" />
                   )}
                 </div>
                 <span
-                  className={`mt-2.5 text-[10px] sm:text-xs font-mono tracking-wider transition-colors uppercase ${
+                  className={`mt-2 text-[9px] sm:text-xs font-mono tracking-wider transition-colors uppercase ${
                     isActive ? 'text-cream font-bold' : 'text-cream/40 group-hover:text-cream/70'
                   }`}
                 >

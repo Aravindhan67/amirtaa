@@ -45,9 +45,9 @@ const CARD_THEMES = [
 
 export const AppreciationCards: React.FC<AppreciationCardsProps> = ({ onUnlockNext, isNextUnlocked }) => {
   return (
-    <section id="appreciation" className="relative py-28 sm:py-36 px-4 sm:px-6 w-full max-w-6xl mx-auto">
+    <section id="appreciation" className="relative py-20 sm:py-36 px-3 sm:px-6 w-full max-w-6xl mx-auto">
       {/* Section Header */}
-      <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-24">
+      <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -66,7 +66,7 @@ export const AppreciationCards: React.FC<AppreciationCardsProps> = ({ onUnlockNe
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.32, 0.72, 0, 1] }}
-          className="text-3xl sm:text-5xl lg:text-6xl font-serif font-bold text-white mb-6"
+          className="text-2xl sm:text-5xl lg:text-6xl font-serif font-bold text-white mb-4 sm:mb-6"
         >
           {BIRTHDAY_DATA.appreciation.heading}
         </motion.h2>
@@ -76,14 +76,14 @@ export const AppreciationCards: React.FC<AppreciationCardsProps> = ({ onUnlockNe
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
-          className="text-base sm:text-lg text-cream/70 font-light"
+          className="text-sm sm:text-lg text-cream/70 font-light"
         >
           {BIRTHDAY_DATA.appreciation.subtitle}
         </motion.p>
       </div>
 
       {/* 5 Animated Cards with Curated Palette */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {BIRTHDAY_DATA.appreciation.items.map((item, idx) => {
           const isFifth = idx === 4;
           const theme = CARD_THEMES[idx % CARD_THEMES.length];

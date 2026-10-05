@@ -321,7 +321,7 @@ export const MusicToggle: React.FC = () => {
                 <span className="w-[2.5px] bg-rose-300 rounded-full animate-[shimmer_0.8s_ease-in-out_infinite_0.35s] h-2.5"></span>
               </div>
               <Volume2 className="w-3.5 h-3.5 text-rose-300" />
-              <div className="flex flex-col text-left leading-none max-w-[130px] sm:max-w-[180px]">
+              <div className="flex flex-col text-left leading-none max-w-[95px] xs:max-w-[130px] sm:max-w-[180px]">
                 <span className="text-[10px] font-mono text-gold-champagne tracking-wider truncate">
                   {songTitle}
                 </span>
@@ -332,9 +332,9 @@ export const MusicToggle: React.FC = () => {
             </>
           ) : (
             <>
-              <VolumeX className="w-3.5 h-3.5 text-cream/50" />
-              <span className="text-[11px] font-mono tracking-wider text-cream/70">
-                PLAY TAMIL SONG
+              <VolumeX className="w-3.5 h-3.5 text-cream/50 shrink-0" />
+              <span className="text-[10px] sm:text-[11px] font-mono tracking-wider text-cream/70">
+                PLAY SONG
               </span>
             </>
           )}
@@ -357,7 +357,7 @@ export const MusicToggle: React.FC = () => {
 
       {/* Settings / Options Menu Drawer */}
       {showMenu && (
-        <div className="absolute top-full mt-2.5 right-0 w-64 p-4 rounded-2xl bg-[#0e0e16]/98 border border-white/15 shadow-2xl backdrop-blur-3xl z-50 animate-in fade-in zoom-in-95">
+        <div className="absolute top-full mt-2.5 right-0 w-[calc(100vw-1.5rem)] max-w-xs sm:w-64 p-3.5 sm:p-4 rounded-2xl bg-[#0e0e16]/98 border border-white/15 shadow-2xl backdrop-blur-3xl z-50 animate-in fade-in zoom-in-95">
           <div className="flex items-center justify-between pb-2.5 mb-3 border-b border-white/[0.08]">
             <div className="flex items-center gap-1.5 text-xs font-mono text-gold-champagne">
               <Disc3 className="w-3.5 h-3.5 animate-spin" />
@@ -411,7 +411,7 @@ export const MusicToggle: React.FC = () => {
 
       {/* Floating tooltip on first visit */}
       {!hasInteracted && !isPlaying && (
-        <div className="absolute top-full mt-2.5 right-0 w-48 p-2.5 rounded-xl bg-surface-elevated/95 border border-white/15 shadow-2xl backdrop-blur-2xl pointer-events-none text-[11px] text-cream/80 text-center animate-pulse">
+        <div className="absolute top-full mt-2.5 right-0 w-[calc(100vw-2rem)] max-w-[200px] sm:w-48 p-2.5 rounded-xl bg-surface-elevated/95 border border-white/15 shadow-2xl backdrop-blur-2xl pointer-events-none text-[11px] text-cream/80 text-center animate-pulse">
           <div className="flex items-center justify-center gap-1.5 text-gold-champagne font-medium mb-0.5">
             <Music className="w-3.5 h-3.5 text-rose-400" />
             <span>Tamil Friendship Song</span>

@@ -86,9 +86,9 @@ export const FinalMessage: React.FC<FinalMessageProps> = ({ onUnlockNext, isNext
   };
 
   return (
-    <section id="message" className="relative py-28 sm:py-36 px-4 sm:px-6 w-full max-w-4xl mx-auto">
+    <section id="message" className="relative py-20 sm:py-36 px-3 sm:px-6 w-full max-w-4xl mx-auto">
       {/* Section Header */}
-      <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+      <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -107,7 +107,7 @@ export const FinalMessage: React.FC<FinalMessageProps> = ({ onUnlockNext, isNext
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.32, 0.72, 0, 1] }}
-          className="text-3xl sm:text-5xl font-serif font-bold text-white mb-3"
+          className="text-2xl sm:text-5xl font-serif font-bold text-white mb-2 sm:mb-3"
         >
           {BIRTHDAY_DATA.letter.heading}
         </motion.h2>
@@ -117,7 +117,7 @@ export const FinalMessage: React.FC<FinalMessageProps> = ({ onUnlockNext, isNext
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
-          className="text-xs sm:text-sm font-mono tracking-widest text-gold-champagne/90 uppercase"
+          className="text-[11px] sm:text-sm font-mono tracking-widest text-gold-champagne/90 uppercase"
         >
           {BIRTHDAY_DATA.letter.tagline}
         </motion.p>
@@ -135,22 +135,22 @@ export const FinalMessage: React.FC<FinalMessageProps> = ({ onUnlockNext, isNext
         onViewportEnter={() => setHasStarted(true)}
         className="doppelrand-shell hover:ring-gold-champagne/30 transition-all shadow-[0_25px_70px_rgba(0,0,0,0.85)]"
       >
-        <div className="doppelrand-core bg-[#0d0d16] p-8 sm:p-12 relative overflow-hidden border border-white/10">
+        <div className="doppelrand-core bg-[#0d0d16] p-5 sm:p-8 md:p-12 relative overflow-hidden border border-white/10">
           {/* Subtle watermark monogram */}
-          <div className="absolute right-6 bottom-6 text-[160px] font-serif font-bold text-white/[0.02] pointer-events-none select-none">
+          <div className="absolute right-4 bottom-4 sm:right-6 sm:bottom-6 text-[110px] sm:text-[160px] font-serif font-bold text-white/[0.02] pointer-events-none select-none">
             A
           </div>
 
           {/* Letter Head with Wax Seal */}
-          <div className="flex items-center justify-between pb-6 mb-8 border-b border-white/[0.08]">
-            <div className="flex items-center gap-3.5">
+          <div className="flex flex-wrap items-center justify-between gap-3 pb-4 sm:pb-6 mb-6 sm:mb-8 border-b border-white/[0.08]">
+            <div className="flex items-center gap-3">
               <motion.div
                 whileHover={{ rotate: 360, scale: 1.1 }}
                 transition={{ duration: 0.8, ease: 'easeInOut' }}
-                className="w-11 h-11 rounded-full bg-gradient-to-tr from-amber-600 via-rose-600 to-amber-500 p-[1.5px] shadow-[0_0_20px_rgba(212,175,55,0.4)] cursor-pointer"
+                className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-gradient-to-tr from-amber-600 via-rose-600 to-amber-500 p-[1.5px] shadow-[0_0_20px_rgba(212,175,55,0.4)] cursor-pointer shrink-0"
                 title="Monogram Wax Seal"
               >
-                <div className="w-full h-full rounded-full bg-[#12121c] flex items-center justify-center font-serif font-bold text-sm gold-shimmer-text">
+                <div className="w-full h-full rounded-full bg-[#12121c] flex items-center justify-center font-serif font-bold text-xs sm:text-sm gold-shimmer-text">
                   A
                 </div>
               </motion.div>
@@ -158,18 +158,18 @@ export const FinalMessage: React.FC<FinalMessageProps> = ({ onUnlockNext, isNext
                 <span className="text-xs font-mono text-cream/90 tracking-wider">
                   TO: AMIRTAA ❤️
                 </span>
-                <span className="text-[10px] font-mono text-cream/40">
+                <span className="text-[9px] sm:text-[10px] font-mono text-cream/40">
                   FOR MY BEST FRIEND OF 5 YEARS
                 </span>
               </div>
             </div>
-            <div className="text-[11px] font-mono text-gold-champagne/80 bg-white/[0.04] px-3.5 py-1.5 rounded-full border border-white/[0.08]">
+            <div className="text-[10px] sm:text-[11px] font-mono text-gold-champagne/80 bg-white/[0.04] px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full border border-white/[0.08]">
               {BIRTHDAY_DATA.letter.date}
             </div>
           </div>
 
           {/* Typewriter text body */}
-          <div className="min-h-[280px] font-serif text-base sm:text-xl text-cream/90 leading-relaxed space-y-6">
+          <div className="min-h-[220px] sm:min-h-[280px] font-serif text-sm sm:text-xl text-cream/90 leading-relaxed space-y-4 sm:space-y-6">
             {displayedText ? (
               displayedText.split('\n\n').map((paragraph, index) => (
                 <p
