@@ -30,13 +30,63 @@ export const MusicToggle: React.FC = () => {
   const audioContextRef = useRef<AudioContext | null>(null);
   const synthTimerRef = useRef<number | null>(null);
 
-  // Load user preference on mount
+  // Load user preference on mount & Automatic Autoplay on Loop
   useEffect(() => {
     const savedAudio = localStorage.getItem('amirtaa_custom_song_name');
     if (savedAudio) {
       setSongTitle(savedAudio);
     }
-  }, []);
+
+    // Function to start playback smoothly
+    const attemptAutoplay = () => {
+      if (audioRef.current) {
+        audioRef.current.volume = volume;
+        audioRef.current.loop = true;
+        const playPromise = audioRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              setIsPlaying(true);
+              setHasInteracted(true);
+              localStorage.setItem('amirtaa_music_enabled', 'true');
+              removeInteractionListeners();
+            })
+            .catch(() => {
+              // Browser blocked unmuted autoplay without interaction
+              // Listeners will trigger on the very first tap/click/scroll
+            });
+        }
+      }
+    };
+
+    const handleFirstGesture = () => {
+      attemptAutoplay();
+    };
+
+    const addInteractionListeners = () => {
+      window.addEventListener('click', handleFirstGesture, { once: true, passive: true });
+      window.addEventListener('touchstart', handleFirstGesture, { once: true, passive: true });
+      window.addEventListener('scroll', handleFirstGesture, { once: true, passive: true });
+      window.addEventListener('keydown', handleFirstGesture, { once: true, passive: true });
+    };
+
+    const removeInteractionListeners = () => {
+      window.removeEventListener('click', handleFirstGesture);
+      window.removeEventListener('touchstart', handleFirstGesture);
+      window.removeEventListener('scroll', handleFirstGesture);
+      window.removeEventListener('keydown', handleFirstGesture);
+    };
+
+    // 1. Attempt immediate autoplay when page loads
+    attemptAutoplay();
+
+    // 2. Fallback to first user tap/click/scroll anywhere on the page
+    addInteractionListeners();
+
+    return () => {
+      removeInteractionListeners();
+    };
+  }, [volume, customAudioUrl]);
 
   // Built-in Synthesizer for "Mustafa Mustafa" (A.R. Rahman) & "En Frienda Pola"
   const playTamilFriendshipSynthesizer = () => {
@@ -229,13 +279,19 @@ export const MusicToggle: React.FC = () => {
 
   return (
     <div className="relative group">
-      {/* Audio Element for Teddy - En Nanbiye */}
+      {/* Audio Element for Teddy - En Nanbiye (Infinite Loop) */}
       <audio
         ref={audioRef}
         src={customAudioUrl || '/audio/teddy_en_nanbiye.mp3'}
         loop
+        autoPlay
         preload="auto"
-        onEnded={() => setIsPlaying(false)}
+        onEnded={() => {
+          if (audioRef.current) {
+            audioRef.current.currentTime = 0;
+            audioRef.current.play().catch(() => {});
+          }
+        }}
       />
 
       {/* Hidden File Input for Custom Song Upload */}
