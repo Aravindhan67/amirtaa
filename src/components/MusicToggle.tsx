@@ -88,6 +88,67 @@ export const MusicToggle: React.FC = () => {
     };
   }, [volume, customAudioUrl]);
 
+  // Track if background music was active before video started playing
+  const wasPlayingBeforeVideoRef = useRef<boolean>(false);
+
+  // Automatic cutoff of background music whenever any video plays
+  useEffect(() => {
+    const handleVideoStarted = () => {
+      if (audioRef.current && !audioRef.current.paused) {
+        wasPlayingBeforeVideoRef.current = true;
+        audioRef.current.pause();
+      } else if (isPlaying) {
+        wasPlayingBeforeVideoRef.current = true;
+      }
+      setIsPlaying(false);
+      stopSynthesizer();
+    };
+
+    const handleVideoStopped = () => {
+      if (wasPlayingBeforeVideoRef.current) {
+        wasPlayingBeforeVideoRef.current = false;
+        if (audioRef.current) {
+          audioRef.current.volume = volume;
+          audioRef.current
+            .play()
+            .then(() => {
+              setIsPlaying(true);
+            })
+            .catch(() => {});
+        }
+      }
+    };
+
+    // Custom window events from video components
+    window.addEventListener('amirtaa:video-play', handleVideoStarted);
+    window.addEventListener('amirtaa:video-pause', handleVideoStopped);
+
+    // Global document capture for all HTML5 <video> elements
+    const onCapturePlay = (e: Event) => {
+      if (e.target instanceof HTMLVideoElement) {
+        handleVideoStarted();
+      }
+    };
+
+    const onCapturePause = (e: Event) => {
+      if (e.target instanceof HTMLVideoElement) {
+        handleVideoStopped();
+      }
+    };
+
+    document.addEventListener('play', onCapturePlay, true);
+    document.addEventListener('pause', onCapturePause, true);
+    document.addEventListener('ended', onCapturePause, true);
+
+    return () => {
+      window.removeEventListener('amirtaa:video-play', handleVideoStarted);
+      window.removeEventListener('amirtaa:video-pause', handleVideoStopped);
+      document.removeEventListener('play', onCapturePlay, true);
+      document.removeEventListener('pause', onCapturePause, true);
+      document.removeEventListener('ended', onCapturePause, true);
+    };
+  }, [volume, isPlaying]);
+
   // Built-in Synthesizer for "Mustafa Mustafa" (A.R. Rahman) & "En Frienda Pola"
   const playTamilFriendshipSynthesizer = () => {
     if (!audioContextRef.current) {

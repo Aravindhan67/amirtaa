@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { BIRTHDAY_DATA } from '../data/content';
-import { Sparkles, ChevronDown, Clock, Star, Heart, Crown } from 'lucide-react';
+import { Sparkles, ChevronDown, Clock, Star, Heart, Crown, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface LandingMemory {
   id: string;

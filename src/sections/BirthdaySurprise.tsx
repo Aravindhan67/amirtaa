@@ -62,6 +62,9 @@ export const BirthdaySurprise: React.FC = () => {
     triggerLuxuryConfetti();
     setTimeout(() => triggerLuxuryConfetti(), 900);
 
+    // Immediately cut off background song when birthday video opens
+    window.dispatchEvent(new CustomEvent('amirtaa:video-play'));
+
     // Try to auto-play video smoothly
     setTimeout(() => {
       if (videoRef.current) {
@@ -84,6 +87,8 @@ export const BirthdaySurprise: React.FC = () => {
       videoRef.current.pause();
       setIsPlaying(false);
     }
+    // Resume background song when video modal closes
+    window.dispatchEvent(new CustomEvent('amirtaa:video-pause'));
     setIsOpen(false);
   };
 
@@ -92,9 +97,11 @@ export const BirthdaySurprise: React.FC = () => {
     if (isPlaying) {
       videoRef.current.pause();
       setIsPlaying(false);
+      window.dispatchEvent(new CustomEvent('amirtaa:video-pause'));
     } else {
       videoRef.current.play();
       setIsPlaying(true);
+      window.dispatchEvent(new CustomEvent('amirtaa:video-play'));
     }
   };
 
@@ -282,8 +289,19 @@ export const BirthdaySurprise: React.FC = () => {
                 <video
                   ref={videoRef}
                   src={videoSrc}
+                  onPlay={() => {
+                    setIsPlaying(true);
+                    window.dispatchEvent(new CustomEvent('amirtaa:video-play'));
+                  }}
+                  onPause={() => {
+                    setIsPlaying(false);
+                    window.dispatchEvent(new CustomEvent('amirtaa:video-pause'));
+                  }}
                   onTimeUpdate={handleTimeUpdate}
-                  onEnded={() => setIsPlaying(false)}
+                  onEnded={() => {
+                    setIsPlaying(false);
+                    window.dispatchEvent(new CustomEvent('amirtaa:video-pause'));
+                  }}
                   onClick={togglePlay}
                   playsInline
                   className="max-h-[46vh] sm:max-h-[56vh] max-w-full w-auto h-auto object-contain mx-auto cursor-pointer block rounded-lg sm:rounded-xl"
