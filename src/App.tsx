@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { ParticleBackground } from './components/ParticleBackground';
 import { MusicToggle } from './components/MusicToggle';
 import { Hero } from './sections/Hero';
@@ -22,6 +24,14 @@ export const App: React.FC = () => {
 
   const [fiveYearsUnlocked, setFiveYearsUnlocked] = useState(false);
   const [secretButtonTriggered, setSecretButtonTriggered] = useState(false);
+
+  // Always reset scroll to the top of the website on refresh
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+  }, []);
 
   return (
     <div className="relative min-h-[100dvh] bg-[#07070a] text-[#fbfaf7] overflow-x-hidden selection:bg-rose-500/30 selection:text-white">
@@ -200,6 +210,10 @@ export const App: React.FC = () => {
         onCloseSecretButton={() => setSecretButtonTriggered(false)}
         onOpenSecretButton={() => setSecretButtonTriggered(true)}
       />
+
+      {/* Vercel Web Analytics & Speed Insights */}
+      <Analytics />
+      <SpeedInsights />
     </div>
   );
 };

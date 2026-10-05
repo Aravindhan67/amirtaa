@@ -20,26 +20,18 @@ export const CHAPTERS: ChapterMeta[] = [
 ];
 
 export const useChapterProgress = () => {
-  const [unlockedLevel, setUnlockedLevel] = useState<number>(() => {
-    try {
-      const saved = localStorage.getItem('amirtaa_unlocked_level');
-      if (saved !== null) {
-        const parsed = parseInt(saved, 10);
-        return isNaN(parsed) ? 0 : Math.min(Math.max(parsed, 0), TOTAL_CHAPTERS);
-      }
-    } catch {
-      // ignore
-    }
-    return 0; // Starts at 0 (Only Intro visible)
-  });
+  // Always start at Chapter 0 (Only Intro visible; all modules locked on refresh)
+  const [unlockedLevel, setUnlockedLevel] = useState<number>(0);
 
+  // Clear any legacy saved progress on mount so a refreshed page always starts fresh
   useEffect(() => {
     try {
-      localStorage.setItem('amirtaa_unlocked_level', unlockedLevel.toString());
+      localStorage.removeItem('amirtaa_unlocked_level');
+      sessionStorage.removeItem('amirtaa_unlocked_level');
     } catch {
       // ignore
     }
-  }, [unlockedLevel]);
+  }, []);
 
   const unlockChapter = (chapterNum: number) => {
     setUnlockedLevel((prev) => {
