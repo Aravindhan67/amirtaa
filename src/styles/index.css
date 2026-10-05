@@ -1,0 +1,179 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-base: #07070a;
+    --bg-surface: #0e0e14;
+    --bg-surface-elevated: #151520;
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-highlight: rgba(255, 255, 255, 0.16);
+    --rose-glow: rgba(244, 114, 182, 0.16);
+    --gold-glow: rgba(229, 203, 138, 0.16);
+  }
+
+  html {
+    background-color: var(--bg-base);
+    color: #fbfaf7;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  body {
+    background-color: var(--bg-base);
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100dvh;
+  }
+
+  /* Custom Smooth Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #08080c;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, #fb7185, #e7cb8a);
+  }
+}
+
+@layer components {
+  /* Doppelrand Double-Bezel Architecture */
+  .doppelrand-shell {
+    @apply relative p-1.5 md:p-2 rounded-[2rem] bg-white/[0.04] ring-1 ring-white/10 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)];
+  }
+
+  .doppelrand-core {
+    @apply relative rounded-[calc(2rem-0.375rem)] bg-surface/90 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] p-6 md:p-8 overflow-hidden transition-all duration-500;
+  }
+
+  /* Micro-badge Eyebrow */
+  .eyebrow-badge {
+    @apply inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] uppercase tracking-[0.25em] font-semibold border backdrop-blur-md transition-all duration-300;
+  }
+
+  /* Shimmering Text Gradient */
+  .gold-shimmer-text {
+    background: linear-gradient(135deg, #ffffff 20%, #fae8b2 50%, #e7cb8a 70%, #ffffff 90%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .rose-shimmer-text {
+    background: linear-gradient(135deg, #ffffff 20%, #fecdd3 50%, #fb7185 80%, #ffffff 95%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Luxury Ambient Glows */
+  .glow-rose-soft {
+    box-shadow: 0 0 45px -8px rgba(244, 114, 182, 0.28);
+  }
+
+  .glow-gold-soft {
+    box-shadow: 0 0 45px -8px rgba(229, 203, 138, 0.28);
+  }
+
+  /* Animated border shimmer */
+  .border-glow-rose {
+    box-shadow: 0 0 30px rgba(244, 114, 182, 0.25), inset 0 0 15px rgba(244, 114, 182, 0.1);
+  }
+
+  .border-glow-gold {
+    box-shadow: 0 0 30px rgba(229, 203, 138, 0.25), inset 0 0 15px rgba(229, 203, 138, 0.1);
+  }
+}
+
+/* Subtle Film Grain */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 40;
+  opacity: 0.022;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Polaroids */
+.polaroid-card {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* Keyframe Animations */
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0.5deg);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes shimmerBeam {
+  0% {
+    transform: translateX(-150%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(250%) skewX(-20deg);
+  }
+}
+
+.animate-float-gentle {
+  animation: floatGentle 5s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+/* Interactive Spotlight helper */
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.spotlight-card::before {
+  content: '';
+  position: absolute;
+  top: var(--mouse-y, -1000px);
+  left: var(--mouse-x, -1000px);
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(244, 114, 182, 0.12) 0%, rgba(229, 203, 138, 0.06) 40%, transparent 70%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition: opacity 0.3s;
+  opacity: 0;
+  z-index: 1;
+}
+
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+
+/* Prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
