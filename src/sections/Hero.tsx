@@ -3,6 +3,46 @@ import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { BIRTHDAY_DATA } from '../data/content';
 import { Sparkles, ChevronDown, Clock, Star, Heart, Crown } from 'lucide-react';
 
+interface LandingMemory {
+  id: string;
+  src: string;
+  title: string;
+  subtitle: string;
+  badge: string;
+  tag: string;
+  caption: string;
+}
+
+const LANDING_MEMORIES: LandingMemory[] = [
+  {
+    id: 'casual',
+    src: '/landing-1.jpeg',
+    title: 'College Days • Casual Vibes',
+    subtitle: 'Where every casual hangout became a lifelong memory',
+    badge: 'Campus Days ✨',
+    tag: 'Look 01',
+    caption: '“Unfiltered laughs & constant support”'
+  },
+  {
+    id: 'traditional',
+    src: '/landing-2.jpeg',
+    title: 'Ethnic Day • Traditional Pride',
+    subtitle: 'Red & Silk • Half a decade of standing tall together',
+    badge: 'Ethnic Milestone ❤️',
+    tag: 'Look 02 (Featured)',
+    caption: '“5 Years of Grace & Friendship”'
+  },
+  {
+    id: 'festive',
+    src: '/landing-3.jpeg',
+    title: 'Festive Bond • Blue & Peacock',
+    subtitle: 'Through festivals, celebrations, and countless milestones',
+    badge: 'Festive Smiles 🌟',
+    tag: 'Look 03',
+    caption: '“Together through every season of life”'
+  },
+];
+
 interface HeroProps {
   onUnlockFiveYearEgg: () => void;
   onEnterStory: () => void;
@@ -10,6 +50,7 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ onUnlockFiveYearEgg, onEnterStory }) => {
   const [clickCount, setClickCount] = useState(0);
+  const [activePhotoIdx, setActivePhotoIdx] = useState(1); // Default to the traditional milestone photo
   const containerRef = useRef<HTMLElement | null>(null);
 
   // Smooth Parallax Scroll Tracking (Responsive & Gentle)
@@ -24,12 +65,13 @@ export const Hero: React.FC<HeroProps> = ({ onUnlockFiveYearEgg, onEnterStory })
     restDelta: 0.001
   });
 
-  // Parallax transformations calibrated for mobile and desktop
-  const imageY = useTransform(smoothProgress, [0, 1], ['0%', '15%']);
+  // Staggered parallax transformations for the 3 images and text
+  const imageYCenter = useTransform(smoothProgress, [0, 1], ['0%', '14%']);
+  const imageYLeft = useTransform(smoothProgress, [0, 1], ['0%', '9%']);
+  const imageYRight = useTransform(smoothProgress, [0, 1], ['0%', '20%']);
   const imageScale = useTransform(smoothProgress, [0, 1], [1, 1.05]);
-  const imageRotate = useTransform(smoothProgress, [0, 1], [0, -1.5]);
   const textY = useTransform(smoothProgress, [0, 1], ['0%', '-8%']);
-  const bgGlowOpacity = useTransform(smoothProgress, [0, 0.7, 1], [0.25, 0.35, 0.1]);
+  const bgGlowOpacity = useTransform(smoothProgress, [0, 0.7, 1], [0.25, 0.38, 0.1]);
 
   const handleFiveClick = () => {
     const nextCount = clickCount + 1;
@@ -44,24 +86,34 @@ export const Hero: React.FC<HeroProps> = ({ onUnlockFiveYearEgg, onEnterStory })
     onEnterStory();
   };
 
+  const currentMemory = LANDING_MEMORIES[activePhotoIdx];
+
+  const handleNextPhoto = () => {
+    setActivePhotoIdx((prev) => (prev + 1) % LANDING_MEMORIES.length);
+  };
+
+  const handlePrevPhoto = () => {
+    setActivePhotoIdx((prev) => (prev - 1 + LANDING_MEMORIES.length) % LANDING_MEMORIES.length);
+  };
+
   return (
     <section
       ref={containerRef}
       id="intro"
-      className="relative min-h-[135vh] sm:min-h-[170vh] w-full flex flex-col items-center justify-between text-center px-4 sm:px-6 pt-14 sm:pt-20 pb-12 sm:pb-16 overflow-hidden"
+      className="relative min-h-[140vh] sm:min-h-[175vh] w-full flex flex-col items-center justify-between text-center px-3 sm:px-6 pt-14 sm:pt-20 pb-12 sm:pb-16 overflow-hidden"
     >
       {/* Background Soft Lighting Flares with Parallax Glow */}
       <motion.div
         style={{ opacity: bgGlowOpacity }}
         className="absolute inset-0 pointer-events-none flex items-center justify-center -z-10"
       >
-        <div className="w-[300px] sm:w-[850px] h-[300px] sm:h-[850px] rounded-full bg-gradient-to-b from-emerald-500/20 via-rose-500/20 to-gold-champagne/20 blur-[120px] sm:blur-[160px]" />
+        <div className="w-[320px] sm:w-[850px] h-[320px] sm:h-[850px] rounded-full bg-gradient-to-b from-emerald-500/20 via-rose-500/20 to-gold-champagne/20 blur-[120px] sm:blur-[160px]" />
       </motion.div>
 
       {/* ======================================================== */}
       {/* PHASE 1: FULL-SCREEN CINEMATIC LANDING COVER (0 - 100vh) */}
       {/* ======================================================== */}
-      <div className="min-h-[85vh] sm:min-h-[90vh] w-full max-w-5xl mx-auto flex flex-col items-center justify-center relative z-10 my-auto py-4 sm:py-8">
+      <div className="min-h-[85vh] sm:min-h-[90vh] w-full max-w-6xl mx-auto flex flex-col items-center justify-center relative z-10 my-auto py-4 sm:py-8">
         {/* Top Floating Eyebrow Tags */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -82,21 +134,25 @@ export const Hero: React.FC<HeroProps> = ({ onUnlockFiveYearEgg, onEnterStory })
             <Heart className="w-3 h-3 text-rose-400 fill-rose-400 shrink-0" />
             <span>என் தோழியே • Amirtaa's Birthday</span>
           </div>
+
+          <div className="hidden md:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-[10px] sm:text-[11px] font-mono text-gold-champagne tracking-wider">
+            <span>3 Captured Moments Together</span>
+          </div>
         </motion.div>
 
         {/* Central Parallax Portrait & Grand Title Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center w-full mb-8 sm:mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center w-full mb-8 sm:mb-12">
           {/* Left Column: Grand Typography Reveal */}
           <motion.div
             style={{ y: textY }}
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.4, ease: [0.32, 0.72, 0, 1] }}
-            className="lg:col-span-7 text-center lg:text-left space-y-4 sm:space-y-5"
+            className="lg:col-span-6 text-center lg:text-left space-y-4 sm:space-y-5"
           >
             <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 rounded-full bg-gold-champagne/10 border border-gold-champagne/20 text-[11px] sm:text-xs font-mono text-gold-champagne">
               <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-gold-champagne shrink-0" />
-              <span>OCTOBER 2026 • SPECIAL CELEBRATION</span>
+              <span>OCTOBER 2026 • 5-YEAR SPECIAL</span>
             </div>
 
             <h1 className="text-3xl xs:text-4xl sm:text-6xl lg:text-7xl font-serif font-bold tracking-tight text-white leading-[1.12] sm:leading-[1.08]">
@@ -113,7 +169,7 @@ export const Hero: React.FC<HeroProps> = ({ onUnlockFiveYearEgg, onEnterStory })
               </span>
             </h1>
 
-            <p className="text-cream/80 text-sm sm:text-xl font-light leading-relaxed max-w-xl mx-auto lg:mx-0 font-serif italic">
+            <p className="text-cream/80 text-sm sm:text-lg lg:text-xl font-light leading-relaxed max-w-xl mx-auto lg:mx-0 font-serif italic">
               “To the girl who turned 5 years into a lifetime of trust, laughter, and unbreakable memories.”
             </p>
 
@@ -129,50 +185,224 @@ export const Hero: React.FC<HeroProps> = ({ onUnlockFiveYearEgg, onEnterStory })
                 ✦ Best Friend Forever
               </span>
             </div>
-          </motion.div>
 
-          {/* Right Column: Majestic Parallax Portrait of Amirtaa */}
-          <motion.div
-            style={{ y: imageY, scale: imageScale, rotate: imageRotate }}
-            initial={{ opacity: 0, scale: 0.9, y: 25 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 1.1, delay: 0.3, ease: [0.32, 0.72, 0, 1] }}
-            className="lg:col-span-5 flex justify-center relative"
-          >
-            {/* Ambient Multi-Layer Backlight Glow */}
-            <div className="absolute -inset-3 sm:-inset-4 rounded-3xl bg-gradient-to-tr from-emerald-500/25 via-gold-champagne/20 to-rose-500/25 blur-2xl opacity-75 animate-pulse -z-10" />
-
-            {/* Luxury Double-Bezel Frame */}
-            <div className="relative p-2 sm:p-3 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-white/20 via-white/5 to-white/10 border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.9)] max-w-[250px] xs:max-w-[280px] sm:max-w-[340px] w-full group">
-              <div className="relative aspect-[4/5] sm:aspect-[9/16] w-full rounded-xl sm:rounded-2xl overflow-hidden bg-black shadow-inner">
-                <img
-                  src="/landing-hero.jpeg"
-                  alt="Amirtaa Birthday Portrait"
-                  loading="eager"
-                  className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
-                />
-
-                {/* Subtle vignette gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
-
-                {/* Floating Corner Badge */}
-                <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 px-2.5 sm:px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-[10px] font-mono text-cream/90 flex items-center gap-1.5 shadow-lg">
-                  <Sparkles className="w-3 h-3 text-gold-champagne" />
-                  <span>Amirtaa ✨</span>
-                </div>
-
-                {/* Bottom Photo Caption */}
-                <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-3 sm:left-3 sm:right-3 p-2 sm:p-2.5 rounded-xl bg-black/65 backdrop-blur-md border border-white/15 text-left">
-                  <p className="text-[11px] sm:text-xs font-serif italic text-white font-medium">
-                    “5 Years of Grace & Friendship”
-                  </p>
-                  <p className="text-[9px] sm:text-[10px] font-mono text-gold-champagne/90">
-                    Always by my side ❤️
-                  </p>
-                </div>
+            {/* Interactive Photo Selector Tabs for 3 Images */}
+            <div className="pt-2 flex flex-col items-center lg:items-start gap-2">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-cream/50 flex items-center gap-1.5">
+                <Sparkles className="w-3 h-3 text-gold-champagne" />
+                <span>CHOOSE A MOMENT:</span>
+              </span>
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-1.5 sm:gap-2">
+                {LANDING_MEMORIES.map((m, idx) => (
+                  <button
+                    key={m.id}
+                    onClick={() => setActivePhotoIdx(idx)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-mono transition-all duration-300 flex items-center gap-1.5 cursor-pointer ${
+                      activePhotoIdx === idx
+                        ? 'bg-rose-500/20 border border-rose-400/70 text-white shadow-[0_0_15px_rgba(244,63,94,0.35)] scale-105'
+                        : 'bg-white/[0.03] border border-white/10 text-cream/60 hover:text-white hover:bg-white/[0.07]'
+                    }`}
+                  >
+                    <span className="text-[10px] text-gold-champagne font-bold">0{idx + 1}</span>
+                    <span>{m.badge}</span>
+                  </button>
+                ))}
               </div>
             </div>
           </motion.div>
+
+          {/* Right Column: 3-Photo Interactive Parallax Fan & Showcase */}
+          <div className="lg:col-span-6 flex flex-col items-center justify-center relative">
+            {/* Ambient Multi-Layer Backlight Glow */}
+            <div className="absolute -inset-4 sm:-inset-6 rounded-3xl bg-gradient-to-tr from-emerald-500/20 via-gold-champagne/15 to-rose-500/20 blur-3xl opacity-75 animate-pulse -z-10" />
+
+            {/* Desktop 3-Card Fanned Parallax View */}
+            <div className="hidden sm:flex items-center justify-center relative w-full h-[460px] max-w-lg mx-auto">
+              {/* Left Fanned Card (img 1: Casual) */}
+              <motion.div
+                style={{ y: imageYLeft }}
+                onClick={() => setActivePhotoIdx(0)}
+                whileHover={{ scale: 1.05, zIndex: 30 }}
+                className={`absolute left-0 cursor-pointer transition-all duration-500 transform -rotate-6 origin-bottom-left ${
+                  activePhotoIdx === 0
+                    ? 'z-25 scale-105 ring-2 ring-rose-400 shadow-[0_20px_50px_rgba(244,63,94,0.4)]'
+                    : 'z-10 opacity-75 hover:opacity-100'
+                }`}
+              >
+                <div className="p-2 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl w-[170px] lg:w-[190px]">
+                  <div className="relative aspect-[3/4] w-full rounded-xl overflow-hidden bg-black">
+                    <img
+                      src="/landing-1.jpeg"
+                      alt="College Days Together"
+                      loading="eager"
+                      className="w-full h-full object-cover object-top"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+                    <span className="absolute bottom-2 left-2 text-[10px] font-mono text-cream/90 bg-black/60 px-2 py-0.5 rounded-full border border-white/10">
+                      College Days
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Right Fanned Card (img 3: Festive) */}
+              <motion.div
+                style={{ y: imageYRight }}
+                onClick={() => setActivePhotoIdx(2)}
+                whileHover={{ scale: 1.05, zIndex: 30 }}
+                className={`absolute right-0 cursor-pointer transition-all duration-500 transform rotate-6 origin-bottom-right ${
+                  activePhotoIdx === 2
+                    ? 'z-25 scale-105 ring-2 ring-gold-champagne shadow-[0_20px_50px_rgba(229,203,138,0.4)]'
+                    : 'z-10 opacity-75 hover:opacity-100'
+                }`}
+              >
+                <div className="p-2 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl w-[170px] lg:w-[190px]">
+                  <div className="relative aspect-[3/4] w-full rounded-xl overflow-hidden bg-black">
+                    <img
+                      src="/landing-3.jpeg"
+                      alt="Festive Days Together"
+                      loading="eager"
+                      className="w-full h-full object-cover object-top"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+                    <span className="absolute bottom-2 left-2 text-[10px] font-mono text-cream/90 bg-black/60 px-2 py-0.5 rounded-full border border-white/10">
+                      Festive Bond
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Center Spotlight Card (img 2: Traditional Ethnic Day or Active Selection) */}
+              <motion.div
+                style={{ y: imageYCenter, scale: imageScale }}
+                className="relative z-20 cursor-pointer group"
+                onClick={() => setActivePhotoIdx((prev) => (prev + 1) % 3)}
+              >
+                <div className="p-2.5 sm:p-3 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-white/25 via-white/10 to-white/15 border border-white/25 shadow-[0_25px_60px_rgba(0,0,0,0.95)] w-[210px] lg:w-[240px]">
+                  <div className="relative aspect-[3/4] sm:aspect-[9/16] w-full rounded-xl sm:rounded-2xl overflow-hidden bg-black shadow-inner">
+                    <img
+                      src={currentMemory.src}
+                      alt={currentMemory.title}
+                      loading="eager"
+                      className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+
+                    {/* Subtle vignette gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/20 pointer-events-none" />
+
+                    {/* Floating Corner Badge */}
+                    <div className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-[10px] font-mono text-cream/90 flex items-center gap-1.5 shadow-lg">
+                      <Sparkles className="w-3 h-3 text-gold-champagne" />
+                      <span>{currentMemory.badge}</span>
+                    </div>
+
+                    {/* Bottom Photo Caption */}
+                    <div className="absolute bottom-2.5 left-2.5 right-2.5 p-2 sm:p-2.5 rounded-xl bg-black/70 backdrop-blur-md border border-white/15 text-left">
+                      <p className="text-[11px] sm:text-xs font-serif italic text-white font-medium">
+                        {currentMemory.caption}
+                      </p>
+                      <p className="text-[9px] sm:text-[10px] font-mono text-gold-champagne/90">
+                        Amirtaa & Aravindhan ❤️
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Mobile Touch-Friendly Card View with Next/Prev Swiper */}
+            <div className="sm:hidden flex flex-col items-center w-full max-w-[270px] relative">
+              <motion.div
+                style={{ y: imageYCenter }}
+                className="w-full relative"
+              >
+                <div className="p-2 rounded-2xl bg-gradient-to-b from-white/20 via-white/5 to-white/10 border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.9)] w-full">
+                  <div className="relative aspect-[4/5] w-full rounded-xl overflow-hidden bg-black shadow-inner">
+                    <img
+                      src={currentMemory.src}
+                      alt={currentMemory.title}
+                      loading="eager"
+                      className="w-full h-full object-cover object-top"
+                    />
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/20 pointer-events-none" />
+
+                    {/* Corner Tag */}
+                    <div className="absolute top-2 left-2 px-2.5 py-0.5 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-[10px] font-mono text-cream/90 flex items-center gap-1">
+                      <Sparkles className="w-2.5 h-2.5 text-gold-champagne" />
+                      <span>{currentMemory.badge}</span>
+                    </div>
+
+                    {/* Bottom Caption */}
+                    <div className="absolute bottom-2 left-2 right-2 p-2 rounded-lg bg-black/70 backdrop-blur-md border border-white/15 text-left">
+                      <p className="text-[11px] font-serif italic text-white font-medium leading-tight">
+                        {currentMemory.caption}
+                      </p>
+                      <p className="text-[9px] font-mono text-gold-champagne/90 mt-0.5">
+                        Amirtaa & Aravindhan ❤️
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Mobile Carousel Navigation Arrows & Indicators */}
+              <div className="flex items-center justify-between w-full mt-3 px-1">
+                <button
+                  onClick={handlePrevPhoto}
+                  className="w-8 h-8 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/15 flex items-center justify-center text-white active:scale-95"
+                  aria-label="Previous photo"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+
+                {/* 3 Dot Indicators */}
+                <div className="flex items-center gap-2">
+                  {LANDING_MEMORIES.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setActivePhotoIdx(i)}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        i === activePhotoIdx
+                          ? 'w-6 bg-gradient-to-r from-rose-400 to-gold-champagne'
+                          : 'w-1.5 bg-white/20'
+                      }`}
+                      aria-label={`Go to photo ${i + 1}`}
+                    />
+                  ))}
+                </div>
+
+                <button
+                  onClick={handleNextPhoto}
+                  className="w-8 h-8 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/15 flex items-center justify-center text-white active:scale-95"
+                  aria-label="Next photo"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Thumbnail Quick Selector Bar for all 3 images */}
+            <div className="flex items-center gap-2 sm:gap-3 mt-4 p-1.5 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md">
+              {LANDING_MEMORIES.map((m, idx) => (
+                <button
+                  key={m.id}
+                  onClick={() => setActivePhotoIdx(idx)}
+                  className={`relative w-12 sm:w-14 h-12 sm:h-14 rounded-xl overflow-hidden border transition-all duration-300 cursor-pointer ${
+                    activePhotoIdx === idx
+                      ? 'border-rose-400 ring-2 ring-rose-400/50 scale-105 shadow-[0_0_15px_rgba(244,63,94,0.4)]'
+                      : 'border-white/15 opacity-60 hover:opacity-100 hover:border-white/40'
+                  }`}
+                  title={m.title}
+                >
+                  <img src={m.src} alt={m.title} className="w-full h-full object-cover object-top" />
+                  <span className="absolute bottom-0 inset-x-0 bg-black/75 text-[8px] font-mono text-center text-white/90">
+                    0{idx + 1}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Parallax Scroll Down Indicator */}
