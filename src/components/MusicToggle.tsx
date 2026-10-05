@@ -10,18 +10,18 @@ interface TamilTrack {
 }
 
 const DEFAULT_TAMIL_TRACK: TamilTrack = {
-  id: 'mustafa',
-  title: 'Mustafa Mustafa / En Frienda Pola',
-  movie: 'Kadhal Desam & Nanban',
-  artist: 'A.R. Rahman & Harris Jayaraj',
-  tag: 'Tamil Best Friend Anthem'
+  id: 'teddy_en_nanbiye',
+  title: 'En Nanbiye (என் தோழியே)',
+  movie: 'Teddy',
+  artist: 'D. Imman',
+  tag: 'Tamil Girl Best Friend Anthem'
 };
 
 export const MusicToggle: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [hasInteracted, setHasInteracted] = useState<boolean>(false);
   const [showMenu, setShowMenu] = useState<boolean>(false);
-  const [volume, setVolume] = useState<number>(0.75);
+  const [volume, setVolume] = useState<number>(0.85);
   const [songTitle, setSongTitle] = useState<string>(DEFAULT_TAMIL_TRACK.title);
   const [customAudioUrl, setCustomAudioUrl] = useState<string | null>(null);
 
@@ -229,10 +229,10 @@ export const MusicToggle: React.FC = () => {
 
   return (
     <div className="relative group">
-      {/* Hidden Audio Element for actual MP3 stream / file */}
+      {/* Audio Element for Teddy - En Nanbiye */}
       <audio
         ref={audioRef}
-        src={customAudioUrl || '/audio/tamil-friendship-song.mp3'}
+        src={customAudioUrl || '/audio/teddy_en_nanbiye.mp3'}
         loop
         preload="auto"
         onEnded={() => setIsPlaying(false)}
@@ -321,7 +321,7 @@ export const MusicToggle: React.FC = () => {
               {songTitle}
             </p>
             <p className="text-[10px] text-cream/60 font-light">
-              Mustafa Mustafa • En Frienda Pola • Thozha
+              Teddy • D. Imman • Tamil Girl Best Friend Anthem
             </p>
           </div>
 
